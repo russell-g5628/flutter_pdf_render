@@ -42,13 +42,13 @@ class _MyAppState extends State<MyApp> {
           onDoubleTap: () {
             var newRadio = controller.zoomRatio * 1.5;
             // 3: maxScale
-            if(newRadio > 3) {
+            if (newRadio > 3) {
               newRadio = 1;
             }
             controller.ready?.setZoomRatio(
-            zoomRatio: newRadio,
-            center: _doubleTapDetails!.localPosition,
-          );
+              zoomRatio: newRadio,
+              center: _doubleTapDetails!.localPosition,
+            );
           },
           child: !kIsWeb && Platform.isMacOS
               // Networking sample using flutter_cache_manager
@@ -81,12 +81,28 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
         ),
-        floatingActionButton: Column(
+        floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             FloatingActionButton(
               child: const Icon(Icons.first_page),
               onPressed: () => controller.ready?.goToPage(pageNumber: 1),
+            ),
+            FloatingActionButton(
+              child: const Icon(Icons.first_page),
+              onPressed: () {
+                if (controller.ready != null) {
+                  controller.ready!.goToPage(pageNumber: controller.ready!.currentPageNumber - 1);
+                }
+              },
+            ),
+            FloatingActionButton(
+              child: const Icon(Icons.first_page),
+              onPressed: () {
+                if (controller.ready != null) {
+                  controller.ready!.goToPage(pageNumber: controller.ready!.currentPageNumber + 1);
+                }
+              },
             ),
             FloatingActionButton(
               child: const Icon(Icons.last_page),
