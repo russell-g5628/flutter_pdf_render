@@ -39,10 +39,17 @@ class _MyAppState extends State<MyApp> {
         body: GestureDetector(
           // Supporting double-tap gesture on the viewer.
           onDoubleTapDown: (details) => _doubleTapDetails = details,
-          onDoubleTap: () => controller.ready?.setZoomRatio(
-            zoomRatio: controller.zoomRatio * 1.5,
+          onDoubleTap: () {
+            var newRadio = controller.zoomRatio * 1.5;
+            // 3: maxScale
+            if(newRadio > 3) {
+              newRadio = 1;
+            }
+            controller.ready?.setZoomRatio(
+            zoomRatio: newRadio,
             center: _doubleTapDetails!.localPosition,
-          ),
+          );
+          },
           child: !kIsWeb && Platform.isMacOS
               // Networking sample using flutter_cache_manager
               ? PdfViewer.openFutureFile(
@@ -55,7 +62,9 @@ class _MyAppState extends State<MyApp> {
                   params: const PdfViewerParams(
                     padding: 10,
                     minScale: 1.0,
-                    // scrollDirection: Axis.horizontal,
+                    panEnabled: false,
+                    scaleEnabled: true,
+                    scrollDirection: Axis.horizontal,
                   ),
                 )
               : PdfViewer.openAsset(
@@ -65,7 +74,10 @@ class _MyAppState extends State<MyApp> {
                   params: const PdfViewerParams(
                     padding: 10,
                     minScale: 1.0,
-                    // scrollDirection: Axis.horizontal,
+                    maxScale: 3,
+                    panEnabled: false,
+                    scaleEnabled: true,
+                    scrollDirection: Axis.horizontal,
                   ),
                 ),
         ),
