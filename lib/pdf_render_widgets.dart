@@ -778,6 +778,8 @@ class PdfViewerParams {
   /// It is called on every document load.
   final OnPdfViewerControllerInitialized? onViewerControllerInitialized;
 
+  final ScrollController? scrollController;
+
   /// Initializes the parameters.
   const PdfViewerParams({
     this.pageNumber,
@@ -797,6 +799,7 @@ class PdfViewerParams {
     this.panEnabled = true,
     this.scaleEnabled = true,
     this.onViewerControllerInitialized,
+    this.scrollController,
   });
 
   PdfViewerParams copyWith({
